@@ -93,7 +93,13 @@ class LinkedList:
         return '(' + ' -> '.join(nodes) + ')'
     
     def __repr__(self):
-        return str(self)
+        nodes = []
+        curr_node = self.head
+        while curr_node:
+            nodes.append(str(curr_node.head))
+            curr_node = curr_node.next
+        wtf='LinkedList'+'(' + ', '.join(nodes) + ')'
+        return wtf
 
 def swap_values(link_list, k):
     if k < 1 or k > len(link_list):
