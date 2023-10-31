@@ -101,36 +101,41 @@ class LinkedList:
         wtf='LinkedList'+'(' + ', '.join(nodes) + ')'
         return wtf
 
-def swap_values(link_list, k):
-    if k < 1 or k > len(link_list):
-        raise IndexError('k index out of range')
-    if k == 1:
-        node_k_from_start = link_list.head
-        prev_node_k_from_end = link_list.head
-    else:
-        curr_node = link_list.head
-        for _ in range(k - 1):
-            curr_node = curr_node.next
-        node_k_from_start = curr_node
-        curr_node = curr_node.next
-        prev_node_k_from_end = link_list.head
-        while curr_node:
-            curr_node = curr_node.next
-            prev_node_k_from_end = prev_node_k_from_end.next
-    temp = node_k_from_start.head
-    node_k_from_start.head = prev_node_k_from_end.head
-    prev_node_k_from_end.head = temp
+def swap_values(llist, k):
+    if k < 0 or k >= len(llist):
+        raise IndexError('Index out of range')
+
+    if k == 0 or k == len(llist) - 1:
+        return llist
+
+    # Находим k-ый элемент с начала
+    first_element = llist[k-1]
+    print(first_element)
+    # Находим k-ый элемент с конца
+    last_element = llist[len(llist) - k ]
+    print(last_element)
+    # Меняем значения местами
+    llist[k-1] = last_element
+    llist[len(llist) - k ] = first_element
+
+    return llist
 
 def alternating_split(link_list):
-    if len(link_list) < 2:
-        raise ValueError('linked list has too few elements')
-    odd_list = LinkedList()
-    even_list = LinkedList()
-    curr_node = link_list.head
-    while curr_node:
-        odd_list.add_back(curr_node.head)
-        curr_node = curr_node.next
-        if curr_node:
-            even_list.add_back(curr_node.head)
-            curr_node = curr_node.next
-    return odd_list, even_list
+    if len(link_list) == 0:
+        return None, None
+    
+    if len(link_list) == 1:
+        return link_list, None
+    
+    # Создаем два новых списка
+    list1 = LinkedList()
+    list2 = LinkedList()
+    
+    # Чередуем элементы из исходного списка
+    for i in range(len(link_list)):
+        if i % 2 == 0:
+            list1.add_back(link_list[i])
+        else:
+            list2.add_back(link_list[i])
+    
+    return list1, list2
